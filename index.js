@@ -5,6 +5,7 @@ const cors = require("cors");
 const port = process.env.PORT;
 var multer = require('multer')
 var upload = multer({dest:'uploads/'})
+const path = require("path")
 
 const fs = require('fs')
 const util = require('util')
@@ -14,6 +15,17 @@ const { uploadFile, getFileStream } = require('./s3')
 
 const routes = require("./routes/index");
 const connectDb = require("./db/connect");
+//serving the frontend
+app.use(express.static(path.join(__dirname, "./client/build")));
+app.get("*", function (_, res) {
+  res.sendFile(
+    path.join(__dirname, "./client/build/index.html"),
+    function (err) {
+      res.status(500).send(err);
+    }
+  );
+});
+
 
 app.use(cors());
 app.use(express.json());

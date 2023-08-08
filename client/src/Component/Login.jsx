@@ -29,12 +29,12 @@ export const Login = () => {
             if (isSeller) {
               // Make the login API call using Axios
               response = await axios.post(
-                "http://localhost:4000/seller/signin",
+                "/seller/signin",
                 data
               );
             } else {
               response = await axios.post(
-                "http://localhost:4000/purchaser/signin",
+                "/purchaser/signin",
                 data
               );
             }

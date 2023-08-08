@@ -27,7 +27,7 @@ export const SignUp = () => {
     formData.append('image', data.image);
     formData.append('description', data.description);
 
-    const result = await axios.post('http://localhost:4000/images', formData, {
+    const result = await axios.post('/images', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
     return result.data;
@@ -62,7 +62,7 @@ export const SignUp = () => {
     if(data.isSeller)
     {
       axios
-      .post('http://localhost:4000/seller/signup', data)
+      .post('/seller/signup', data)
       .then((response) => {
         // Handle the response data here
         console.log(response.data);
@@ -74,7 +74,7 @@ export const SignUp = () => {
     }
     else{
       axios
-      .post('http://localhost:4000/purchaser/signup', data)
+      .post('/purchaser/signup', data)
       .then((response) => {
         // Handle the response data here
         console.log(response.data);

@@ -12,9 +12,9 @@ function App() {
 
   return (
    <div className="App">
-     {/* { <Router>{user ? <ProtectedRoutes /> : <AuthRoutes />}</Router> } */}
+     { <Router>{user ? <ProtectedRoutes /> : <AuthRoutes />}</Router> }
      {/* <Seller/> */}
-     <Counter/>
+     {/* <Counter/> */}
    </div>
   );
 }
