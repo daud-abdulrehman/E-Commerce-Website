@@ -3,8 +3,8 @@ const app = express();
 require("dotenv").config();
 const cors = require("cors");
 const port = process.env.PORT;
-var multer = require('multer')
-var upload = multer({dest:'uploads/'})
+// var multer = require('multer')
+// var upload = multer({dest:'uploads/'})
 const path = require("path")
 
 // const fs = require('fs')
