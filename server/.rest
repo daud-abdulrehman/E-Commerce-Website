@@ -1,0 +1,41 @@
+POST http://localhost:3000/seller/signup
+Content-Type: application/json
+
+{
+    "email": "daud@gmail.com",
+    "password": "1234"
+}
+
+
+###
+POST http://localhost:3000/seller/signin
+Content-Type: application/json
+
+{
+    "email": "daud@gmail.com",
+    "password": "1234"
+}
+
+###
+GET http://localhost:3000/seller/myProducts
+
+###
+POST http://localhost:3000/purchaser/signup
+Content-Type: application/json
+
+{
+    "email": "usman@gmail.com",
+    "password": "1234"
+}
+
+###
+POST http://localhost:3000/purchaser/signin
+Content-Type: application/json
+
+{
+    "email": "usman@gmail.com",
+    "password": "1234"
+}
+
+###
+
