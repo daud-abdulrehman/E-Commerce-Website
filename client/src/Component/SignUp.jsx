@@ -22,22 +22,22 @@ export const SignUp = () => {
   const [images, setImages] = useState([]);
   const [isSeller, setIsSeller] = useState(false);
 
-  const postImage = async (data) => {
-    const formData = new FormData();
-    formData.append('image', data.image);
-    formData.append('description', data.description);
+  // const postImage = async (data) => {
+  //   const formData = new FormData();
+  //   formData.append('image', data.image);
+  //   formData.append('description', data.description);
 
-    const result = await axios.post('/images', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
-    return result.data;
-  };
+  //   const result = await axios.post('/images', formData, {
+  //     headers: { 'Content-Type': 'multipart/form-data' },
+  //   });
+  //   return result.data;
+  // };
 
   const handleSubmit = async (data) => {
-    if (file) {
-      const result = await postImage({ image: file, description: data.description });
-      setImages([result.image, ...images]);
-    }
+    // if (file) {
+    //   const result = await postImage({ image: file, description: data.description });
+    //   setImages([result.image, ...images]);
+    // }
 
     console.log("form submitted");
     // Add the isSeller value to the data object before sending to the server
