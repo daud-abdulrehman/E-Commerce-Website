@@ -7,10 +7,10 @@ var multer = require('multer')
 var upload = multer({dest:'uploads/'})
 const path = require("path")
 
-const fs = require('fs')
-const util = require('util')
-const unlinkFile = util.promisify(fs.unlink)
-const { uploadFile, getFileStream } = require('./s3')
+// const fs = require('fs')
+// const util = require('util')
+// const unlinkFile = util.promisify(fs.unlink)
+// const { uploadFile, getFileStream } = require('./s3')
 
 
 const routes = require("./routes/index");
@@ -33,27 +33,27 @@ app.use(routes);
 
 connectDb();
 
-app.get('/images/:key', (req, res) => {
-  console.log(req.params)
-  const key = req.params.key
-  const readStream = getFileStream(key)
+// app.get('/images/:key', (req, res) => {
+//   console.log(req.params)
+//   const key = req.params.key
+//   const readStream = getFileStream(key)
 
-  readStream.pipe(res)
-})
+//   readStream.pipe(res)
+// })
 
-app.post('/images', upload.single('image'), async (req, res) => {
-  const file = req.file
-  console.log(file)
+// app.post('/images', upload.single('image'), async (req, res) => {
+//   const file = req.file
+//   console.log(file)
 
-  // apply filter
-  // resize 
+//   // apply filter
+//   // resize 
 
-  const result = await uploadFile(file)
-  await unlinkFile(file.path)
-  console.log(result)
-  const description = req.body.description
-  res.send({imagePath: `/images/${result.Key}`})
-})
+//   const result = await uploadFile(file)
+//   await unlinkFile(file.path)
+//   console.log(result)
+//   const description = req.body.description
+//   res.send({imagePath: `/images/${result.Key}`})
+// })
 
 
 app.get("/", (req, res) => {
