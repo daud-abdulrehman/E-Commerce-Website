@@ -1,43 +1,39 @@
-// const { Router } = require("express");
-// const router = Router();
-// const multer = require("multer");
-// const path = require("path");
+const { Router } = require("express");
+const router = Router();
+const productSchema = require("../modals/productSchema");
+const SellerSchema = require("../modals/sellerSchema");
+// const { imageUploader, getFileStream } = require("../middlewares/s3");
 
-// // Function to ensure the "uploads/" directory exists
-// const ensureUploadsDirectory = () => {
-//   const uploadDir = path.join(__dirname, "uploads/");
-//   console.log(uploadDir);
-//   const fs = require("fs");
+// router.get("/images/:key", (req, res) => {
+//   const key = req.params.key;
+//   const readStream = getFileStream(key);
 
-//   if (!fs.existsSync(uploadDir)) {
-//     fs.mkdirSync(uploadDir);
-//   }
-// };
-
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     ensureUploadsDirectory();
-//     cb(null, "/home/shahrukh/Desktop/JS/ProjectMongoose/routes/uploads/");
-//   },
-//   filename: function (req, file, cb) {
-//     cb(null, Date.now() + "-" + file.originalname);
-//   },
+//   readStream.pipe(res);
 // });
 
-// const upload = multer({ storage: storage });
+router.get("/products", async (req, res) => {
+  try {
+    const products = await productSchema.find({});
+    res.send(products);
+  } catch (error) {
+    console.error(error.message);
+    res.send("Something went wrong");
+  }
+});
 
-// router.post("/uploadPhoto", upload.single("image"), (req, res) => {
-//   if (!req.file) {
-//     return res.status(400).json({ error: "No file uploaded." });
-//   }
+router.delete("/products", async (req, res) => {
+  try {
+    const deleteResult = await SellerSchema.deleteMany({});
 
-//   const fileName = req.file.filename;
-//   const filePath = req.file.path;
-//   res.json({
-//     message: "File uploaded successfully.",
-//     fileName: fileName,
-//     filePath: filePath,
-//   });
-// });
+    if (deleteResult.deletedCount > 0) {
+      res.send(`Deleted ${deleteResult.deletedCount} products.`);
+    } else {
+      res.send("No products found to delete.");
+    }
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Something went wrong");
+  }
+});
 
-// module.exports = router;
+module.exports = router;

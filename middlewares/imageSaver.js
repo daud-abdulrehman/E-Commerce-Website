@@ -1,45 +1,60 @@
-// const multer = require("multer");
-// const path = require("path");
-// const fs = require("fs");
-// const cloudinary = require("cloudinary").v2;
-// cloudinary.config({
-//   cloud_name: "name",
-//   api_key: "key",
-//   api_secret: "key",
-// });
+const { v2 } = require("cloudinary");
+const cloudinary = v2;
+const multer = require("multer");
+const crypto = require("crypto");
 
-// const ensureUploadsDirectory = () => {
-//   const uploadDir = path.join(__dirname, "uploads/");
-//   if (!fs.existsSync(uploadDir)) {
-//     fs.mkdirSync(uploadDir);
-//   }
-// };
+// Cloudinary configuration
+cloudinary.config({
+  cloud_name: "djjn4dxpu",
+  api_key: "435913532677436",
+  api_secret: "fz83D8iflwaBX6v3ugmU_Ce2wMw",
+});
 
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     ensureUploadsDirectory();
-//     cb(null, "C:/Users/Moosa/Desktop/Ecommerce/uploads");
-//   },
-//   filename: function (req, file, cb) {
-//     cb(null, file.originalname);
-//     //console.log(file.originalname);
-//   },
-// });
+const imageUploader = multer().single("image");
 
-// const saveimage = multer({ storage: storage });
+module.exports = (req, res, next) => {
+  imageUploader(req, res, function (err) {
+    if (err) {
+      return res.status(500).json({ error: "Failed to upload the image." });
+    }
 
-// const uploadToCloudinary = (file, cb) => {
-//   cloudinary.uploader.upload(
-//     file.path,
-//     { folder: "uploads" },
-//     function (error, result) {
-//       if (error) {
-//         console.log(error);
-//         return cb(error);
-//       }
-//       cb(null, result.secure_url);
-//     }
-//   );
-// };
+    if (!req.file) {
+      return res.status(400).json({ error: "No image provided." });
+    }
 
-// module.exports = { saveimage, uploadToCloudinary };
+    const fileBuffer = req.file.buffer;
+    const uniquePublicId = `${Date.now()}_${crypto
+      .randomBytes(8)
+      .toString("hex")}`;
+
+    const uploadStream = cloudinary.uploader.upload_stream(
+      { public_id: uniquePublicId },
+      function (error, result) {
+        if (error) {
+          console.error("Cloudinary upload error:", error);
+          return res
+            .status(500)
+            .json({ error: "Failed to upload the image to Cloudinary." });
+        }
+
+        const cloudinaryUrl = result.secure_url;
+        req.imageUrl = cloudinaryUrl;
+
+        next();
+      }
+    );
+
+    // Create a readable stream from the buffer and pipe it to the upload stream
+    const readableStream = require("stream").Readable.from(fileBuffer);
+    readableStream.pipe(uploadStream);
+  });
+};
+
+
+
+
+
+
+
+
+

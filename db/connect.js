@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const url = "mongodb://127.0.0.1:27017/E-Com";
+const url = "mongodb+srv://daud_abdulrehman:rehman2002@daudcluster.rmxqs97.mongodb.net/test";
 
 const connectDB = async () => {
   try {
@@ -13,3 +13,5 @@ const connectDB = async () => {
 };
 
 module.exports = connectDB;
+
+

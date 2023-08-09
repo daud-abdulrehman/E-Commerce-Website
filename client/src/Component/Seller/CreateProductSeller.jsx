@@ -16,7 +16,7 @@ function CreateProduct() {
       stock: stock,
     };
 
-    axios.post("http://localhost:4000/seller/product", productData)
+    axios.post("/seller/product", productData)
       .then(response => {
         console.log("Product created successfully:", response.data.product);
         // Reset the input fields after successful creation
