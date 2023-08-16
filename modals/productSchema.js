@@ -14,15 +14,19 @@ const productSchema = new Schema({
     type: String,
     required: true,
   },
+  imageUrl: {
+    type: String,
+    default: "",
+  },
   stock: {
     type: Number,
-    default: "Admin",
+    default: "1",
   },
-  sellerId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Seller",
-    required: true,
-  },
+  // sellerId: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: "Seller",
+  //   required: true,
+  // },
 });
 
 const Product = mongoose.model("Product", productSchema);

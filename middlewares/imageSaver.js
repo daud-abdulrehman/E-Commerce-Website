@@ -49,12 +49,3 @@ module.exports = (req, res, next) => {
     readableStream.pipe(uploadStream);
   });
 };
-
-
-
-
-
-
-
-
-

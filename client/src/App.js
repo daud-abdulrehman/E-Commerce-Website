@@ -4,6 +4,7 @@ import AuthRoutes from './routes/Auth';
 import ProtectedRoutes from './routes/ProtectedRoutes';
 import Seller from './Component/Seller';
 import { Counter } from './features/counter/Counter';
+import ProductPage from './Component/ProductPage/ProductPage';
  
 
 function App() {
@@ -12,9 +13,10 @@ function App() {
 
   return (
    <div className="App">
-     { <Router>{user ? <ProtectedRoutes /> : <AuthRoutes />}</Router> }
+     <Router>{user ? <ProtectedRoutes /> : <AuthRoutes />}</Router>
      {/* <Seller/> */}
-     {/* <Counter/> */}
+     {/* <Counter/>
+     {/* <ProductPage/> */}
    </div>
   );
 }

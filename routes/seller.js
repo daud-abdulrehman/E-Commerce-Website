@@ -1,7 +1,6 @@
 const auth = require("../middlewares/auth");
 const sellerControllers = require("../controllers/sellerControllers");
-// const saveimage = require("../middlewares/imageSaver");
-
+const imageSaver = require("../middlewares/imageSaver");
 const { Router } = require("express");
 const router = Router();
 // Sellers
@@ -22,7 +21,7 @@ router.post("/signin", sellerControllers.Signin);
 // Post Seller Product upload
 // Will send product details witl jwt
 // server will check the id through JWT and will made the record of product with rspective id to the seller
-router.post("/createproduct", auth, sellerControllers.createProduct);
+router.post("/createproduct" ,imageSaver, sellerControllers.createProduct);
 
 // Put Seller Product Edit
 // will send the product details with product id and its own id using JWT and server will check if the product id is available
@@ -41,7 +40,7 @@ router.get("/myOrders", auth, sellerControllers.viewOrders);
 
 // Get Seller Products View
 // Will send the get request with the seller id through JWT server will authorize it and will send back the sellers order
-router.get("/myProducts", auth, sellerControllers.viewProduct);
+router.get("/myProducts", sellerControllers.viewProduct);
 
 // Put Seller Order Status Edit
 // Will send the order id with seller id through jwt and server will authenticate the both ids if matched then the status will be

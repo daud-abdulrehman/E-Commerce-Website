@@ -3,9 +3,10 @@ import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 import { ROUTES } from '../utils/routes';
-import {Login} from '../Component/Login';
-import {SignUp} from '../Component/SignUp';
-
+import {Login} from '../Component/Login/Login';
+import {SignUp} from '../Component/SignUp/SignUp';
+import ProductPage from "../Component/ProductPage/ProductPage"
+import CreateProduct from '../Component/CreateProduct/CreateProduct';
 const AuthRoutes= () => (
 
     <Routes>
@@ -15,10 +16,10 @@ const AuthRoutes= () => (
         element={<SignUp/>}
       />
       <Route
-        path="*"
-        element={<Navigate to={ROUTES.AUTH_ROUTES.login} replace />}
+        path={ROUTES.AUTH_ROUTES.root}
+        element={<ProductPage/>}
       />
-      
+      <Route path = {ROUTES.AUTH_ROUTES.createproduct} element = {<CreateProduct/>}/>
     </Routes>
 
 );

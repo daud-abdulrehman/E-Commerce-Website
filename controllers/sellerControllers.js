@@ -64,19 +64,20 @@ sellerControllers.Signin = async (req, res) => {
 
 // Controller to Create Sellers Products
 sellerControllers.createProduct = async (req, res) => {
-  const { name, description, price, stock } = req.body;
-  const sellerId = req.userId;
+  const { name, description, price, stockQuantity } = req.body;
+  // const sellerId = req.userId;
+  console.log(req.imageUrl);
 
   try {
     const newProduct = {
       name: name,
       description: description,
-      sellerId: sellerId,
+      // sellerId: sellerId,
       price: price,
-      stock: stock,
+      stock: stockQuantity,
+      imageUrl: req.imageUrl,
     };
     const product = await Product.create(newProduct);
-    console.log(product)
     res.send({ msg: "Seller Create Products Successful", product });
   } catch (error) {
     console.error(error);
@@ -140,7 +141,7 @@ sellerControllers.viewOrders = async (req, res) => {
 // Controller to View Sellers own Products
 sellerControllers.viewProduct = async (req, res) => {
   try {
-    const products = await Product.find({ sellerId: req.userId });
+    const products = await Product.find({});
     res.json(products);
   } catch (error) {
     res.status(500).json({ message: "Failed to fetch seller products" });

@@ -1,0 +1,18 @@
+/* ProductPage.css */
+.appBar {
+  background-color: black!important;
+}
+
+.title {
+  flex-grow: 1;
+}
+
+.button {
+  margin-right: 10px;
+}
+.product-card-container{
+  display: flex;
+  align-items: flex-start;
+  background-color:white;
+
+}

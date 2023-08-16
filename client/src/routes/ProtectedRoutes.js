@@ -2,7 +2,7 @@ import React from "react";
 
 import { Navigate, Route, Routes,Outlet } from "react-router-dom";
 import { PROTECTED_ROUTES } from "./AppRoutes";
-import {Signup} from '../Component/SignUp'
+import {Signup} from '../Component/SignUp/SignUp'
 import { ROUTES } from "../utils/routes";
 let user={'role':'purchaser'}
 

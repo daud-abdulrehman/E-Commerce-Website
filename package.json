@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@mui/icons-material": "^5.14.3",
     "aws-sdk": "^2.1429.0",
     "cloudinary": "^1.40.0",
     "cors": "^2.8.5",

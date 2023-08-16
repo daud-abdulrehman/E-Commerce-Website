@@ -3,6 +3,8 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { TextField, Button, Checkbox, FormControlLabel } from "@mui/material";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import './Login.css'
 
 const LoginSchema = Yup.object().shape({
   password: Yup.string().min(8, "Too Short!").required("Required"),
@@ -12,9 +14,10 @@ const LoginSchema = Yup.object().shape({
 
 export const Login = () => {
   const [isSeller, setIsSeller] = useState(false);
+
   return (
-    <div style={{ padding: "50px" }}>
-      <h1>Login</h1>
+    <div className="login-container">
+      <h1 className="login-header">Login</h1>
       <Formik
         initialValues={{
           email: "",
@@ -24,19 +27,13 @@ export const Login = () => {
         validationSchema={LoginSchema}
         onSubmit={async (data) => {
           let response;
-          data.isSeller = isSeller
+          data.isSeller = isSeller;
           try {
             if (isSeller) {
               // Make the login API call using Axios
-              response = await axios.post(
-                "/seller/signin",
-                data
-              );
+              response = await axios.post("/seller/signin", data);
             } else {
-              response = await axios.post(
-                "/purchaser/signin",
-                data
-              );
+              response = await axios.post("/purchaser/signin", data);
             }
 
             // Assuming the token is in the response as response.data.token
@@ -44,7 +41,7 @@ export const Login = () => {
 
             // Save the token to the local storage
             localStorage.setItem("token", receivedToken);
-            console.log("Recieved token",receivedToken)
+            console.log("Recieved token", receivedToken);
 
             // Handle any other actions after successful login
             console.log("Login successful!");
@@ -55,12 +52,13 @@ export const Login = () => {
         }}
       >
         {({ errors, touched, setFieldValue }) => (
-          <Form>
-            <TextField
+          <Form className="login-form">
+             <TextField
               id="email"
               name="email"
               label="Email"
               variant="outlined"
+              className="input-field"
               error={Boolean(errors.email && touched.email)}
               helperText={errors.email && touched.email && String(errors.email)}
               onChange={(event) => {
@@ -68,11 +66,11 @@ export const Login = () => {
               }}
             />
             <br />
-            <br />
             <TextField
               name="password"
               label="password"
               variant="outlined"
+              className="input-field"
               error={Boolean(errors.password && touched.password)}
               helperText={
                 errors.password && touched.password && String(errors.password)
@@ -81,8 +79,7 @@ export const Login = () => {
                 setFieldValue("password", event.target.value);
               }}
             />
-            <br />
-            <br />
+            {/* <br /> */}
             <FormControlLabel
               control={
                 <Checkbox
@@ -93,15 +90,24 @@ export const Login = () => {
               }
               label="Are you a Seller?"
               name="isSeller"
+              className="checkbox-field"
             />
             <br />
-            <br />
-
-            <Button variant="contained" color="success" type="submit">
+            
+            {/* "Submit" button */}
+            <Button variant="contained" type="submit" className={"submit-button"}>
               Submit
             </Button>
             <br />
-            <br />
+            {/* "Sign Up" button */}
+            <Button color="inherit">
+              <Link
+                to="/signup"
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                Don't have an account? Sign Up
+              </Link>
+            </Button>
           </Form>
         )}
       </Formik>

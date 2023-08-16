@@ -8,6 +8,7 @@ import {
   Checkbox,
   FormControlLabel,
 } from '@mui/material';
+import './SignUp.css'
 
 
 const SignupSchema = Yup.object().shape({
@@ -18,27 +19,9 @@ const SignupSchema = Yup.object().shape({
 });
 
 export const SignUp = () => {
-  const [file, setFile] = useState(null);
-  const [images, setImages] = useState([]);
   const [isSeller, setIsSeller] = useState(false);
 
-  // const postImage = async (data) => {
-  //   const formData = new FormData();
-  //   formData.append('image', data.image);
-  //   formData.append('description', data.description);
-
-  //   const result = await axios.post('/images', formData, {
-  //     headers: { 'Content-Type': 'multipart/form-data' },
-  //   });
-  //   return result.data;
-  // };
-
   const handleSubmit = async (data) => {
-    // if (file) {
-    //   const result = await postImage({ image: file, description: data.description });
-    //   setImages([result.image, ...images]);
-    // }
-
     console.log("form submitted");
     // Add the isSeller value to the data object before sending to the server
     const formData = new FormData();
@@ -86,15 +69,9 @@ export const SignUp = () => {
     }
   };
 
-
-  // const fileSelected = (event) => {
-  //   const file = event.target.files[0];
-  //   setFile(file);
-  // };
-
   return (
-    <div style={{ padding: '50px' }}>
-      <h1>Signup</h1>
+    <div className='signup-container'>
+      <h1 className='signup-header'>Signup</h1>
       <Formik
         initialValues={{
           username: '',
@@ -107,17 +84,17 @@ export const SignUp = () => {
         onSubmit={handleSubmit}
       >
         {({ errors, touched, setFieldValue }) => (
-          <Form>
+          <Form className='signup-form'>
             <TextField
               name="username"
               label="User Name"
               variant="outlined"
+              className='input-field'
               error={Boolean(errors.username && touched.username)}
               helperText={errors.username && touched.username && String(errors.username)}
               onChange={(event) => {
                 setFieldValue('username', event.target.value);
               } } />
-            <br />
             <br />
 
             <TextField
@@ -125,58 +102,39 @@ export const SignUp = () => {
               name="email"
               label="Email"
               variant="outlined"
+              className='input-field'
               error={Boolean(errors.email && touched.email)}
               helperText={errors.email && touched.email && String(errors.email)}
               onChange={(event) => {
                 setFieldValue('email', event.target.value);
               } } />
             <br />
-            <br />
 
             <TextField
               name="password"
               label="Password"
               variant="outlined"
+              className='input-field'
               error={Boolean(errors.password && touched.password)}
               helperText={errors.password && touched.password && String(errors.password)}
               onChange={(event) => {
                 setFieldValue('password', event.target.value);
               } } />
-            <br />
-            <br />
 
             <FormControlLabel
               control={<Checkbox checked={isSeller} onChange={(event) => setIsSeller(event.target.checked)} name = "isSeller" />}
               label="Are you a Seller?" 
               name="isSeller"
+              className='checkbox-field'
               />
             <br />
-            <br />
-            {/* <p>Checkbox Value: {isSeller ? "Checked" : "Unchecked"}</p> */}
 
-            {/* <input onChange={fileSelected} type="file" accept="image/*"></input>
-            <TextField
-              value={file ? file.name : ''}
-              onChange={(e) => setFieldValue('description', e.target.value)}
-              type="text"
-              placeholder="Description" />
-
-             {errors.image && touched.image && <div>{String(errors.image)}</div>}
-            <br />
-            <br /> */}
-
-            <Button variant="contained" color="success" type="submit">
+            <Button variant="contained" type="submit" className='submit-button'>
               Submit
             </Button>
           </Form>
         )}
       </Formik>
-
-      {images.map((image) => (
-        <div key={image}>
-          <img src={image} alt="image"></img>
-        </div>
-      ))}
     </div>
   );
 }
